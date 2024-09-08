@@ -15,6 +15,7 @@ function ensureDirectoryExistence(dirPath) {
     console.log(`Directory already exists: ${dirPath}`);
   }
 }
+// 去重逻辑
 function customizer(recordItem, AnotherRecordItem) {
   const a = Object.entries(recordItem).filter(tuple => tuple[0] === 'option');
   const b = Object.entries(AnotherRecordItem).filter(tuple => tuple[0] === 'option');
