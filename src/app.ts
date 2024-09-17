@@ -1,35 +1,54 @@
-import * as jetpack from 'fs-jetpack';
+import jetpack from 'fs-jetpack';
 import * as path from 'path';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 
-const targetDirectory = './MCM_Records'; // 替换为你的目标目录
+// user config --->
+const inputDirectoryPath = process.argv[2] || './MCM_Records';
+const outputDirectoryPath = process.argv[3] || inputDirectoryPath+'/merged_records';
+// <--- user config
 
 interface MCMRecord {
-  Mod: string;
-  option?: string;
+  mod: string;
   page: string;
+  click?: string;
+  option?: string;
   toggle?: 'On' | 'Off';
   slider?: number;
   [key: string]: string | number;
 }
+// interface MCMSetting {
+//   mod?: string;
+//   pages?: [{
+//       page: string,
+//       options?: [{
+//         option: string,
+//         [key: string]: string | number;
+//       }],
+//       clicks?: string[]
+//     }]
+// }
+
 
 const mergeMCMRecords = (records: MCMRecord[]): MCMRecord[] => {
   const mergedRecords: { [key: string]: MCMRecord } = {};
-  
+  // const mcmSetting : MCMSetting = {};
+
   records.forEach(record => {
-    const key = `${record.Mod}_${record.page}`;
+
+    const key = `${record.Mod}_${record.page}_${record.option ? record.option : ''}_${ record.click ? record.click : ''}}`;
     if (mergedRecords[key]) {
       mergedRecords[key] = merge(mergedRecords[key], record);
     } else {
       mergedRecords[key] = record;
     }
+
   });
 
   return Object.values(mergedRecords);
 };
 
 const main = async () => {
-  const files = await jetpack.findAsync(targetDirectory, { matching: '*.json' });
+  const files = await jetpack.findAsync(inputDirectoryPath, { matching: '*.json' });
 
   const modRecords: { [modName: string]: { maxOrder: number, records: MCMRecord[] } } = {};
 
@@ -51,7 +70,7 @@ const main = async () => {
   for (const [modName, { maxOrder, records }] of Object.entries(modRecords)) {
     const mergedRecords = mergeMCMRecords(records);
     const newFileName = `${String(maxOrder).padStart(4, '0')}_${modName}.json`;
-    const newFilePath = path.join(targetDirectory, newFileName);
+    const newFilePath = path.join(outputDirectoryPath, newFileName);
     await jetpack.writeAsync(newFilePath, mergedRecords);
   }
 };
