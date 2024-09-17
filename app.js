@@ -19,7 +19,7 @@ const mergeMCMRecords = (records) => {
     const mergedRecords = {};
     // const mcmSetting : MCMSetting = {};
     records.forEach(record => {
-        const key = `${record.Mod}_${record.page}_${record.option ? record.option : ''}_${record.click ? record.click : ''}}`;
+        const key = `${record.Mod}_${record.page}_${record.option ? record.option : ''}_${record.Click ? record.Click : ''}}`;
         if (mergedRecords[key]) {
             mergedRecords[key] = merge(mergedRecords[key], record);
         }

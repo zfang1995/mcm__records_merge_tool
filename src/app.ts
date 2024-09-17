@@ -8,9 +8,9 @@ const outputDirectoryPath = process.argv[3] || inputDirectoryPath+'/merged_recor
 // <--- user config
 
 interface MCMRecord {
-  mod: string;
+  Mod: string;
   page: string;
-  click?: string;
+  Click?: string;
   option?: string;
   toggle?: 'On' | 'Off';
   slider?: number;
@@ -35,7 +35,7 @@ const mergeMCMRecords = (records: MCMRecord[]): MCMRecord[] => {
 
   records.forEach(record => {
 
-    const key = `${record.Mod}_${record.page}_${record.option ? record.option : ''}_${ record.click ? record.click : ''}}`;
+    const key = `${record.Mod}_${record.page}_${record.option ? record.option : ''}_${ record.Click ? record.Click : ''}}`;
     if (mergedRecords[key]) {
       mergedRecords[key] = merge(mergedRecords[key], record);
     } else {
