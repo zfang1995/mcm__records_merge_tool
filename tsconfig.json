@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": ".",
+    "target": "ES2020",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "checkJs": false
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"]
+}

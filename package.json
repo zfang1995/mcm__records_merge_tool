@@ -1,0 +1,21 @@
+{
+  "main": "app.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/lodash": "^4.14.198",
+    "@types/node": "^22.5.5",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.48.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "fetch": "^1.1.0",
+    "fs-jetpack": "^5.1.0",
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "Compile": "npx tsc",
+    "Run": "node app.js"
+  }
+}

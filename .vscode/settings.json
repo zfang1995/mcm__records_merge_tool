@@ -1,3 +1,4 @@
 {
-  "Codegeex.RepoIndex": true
+  "Codegeex.RepoIndex": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

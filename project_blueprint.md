@@ -3,7 +3,7 @@
 这些文件都是由“skyrim MCM Recorder”生成的，用于记录MCM settings，我喜欢将它们称为"MCM_Records"。
 所有 MCM_record 文件的filename都遵循相同的命名规则：
 ```javascript
-filename = 4DigitRandomNumber + '_'  + modName
+filename = 4DigitOrderedNumber + '_'  + modName
 ```
 所有 MCM_record 文件的内容结构都遵循相同的JSON schema：
 ```javascript
@@ -18,13 +18,17 @@ filename = 4DigitRandomNumber + '_'  + modName
         "type": "string",
         "description": "The name of the mod."
       },
-      "option": {
-        "type": "string",
-        "description": "The option within the mod."
-      },
       "page": {
         "type": "string",
         "description": "The page within the mod's MCM menu."
+      },
+      "click": {
+        "type": "string",
+        "description": "activing state of some function of the mod, if applicable."
+      },
+      "option": {
+        "type": "string",
+        "description": "The option within the mod."
       },
       "toggle": {
         "type": "string",
@@ -36,13 +40,13 @@ filename = 4DigitRandomNumber + '_'  + modName
         "description": "The slider value for the option, if applicable."
       }
     },
-    "required": ["Mod", "option", "page"],
+    "required": ["Mod", "page"],
     "additionalProperties": true
   }
 }
 ```
 
 合并规则：
-1. 你需要把所有modname相同的文件合并为一个文件，新文件的filename依旧遵循上述命名规则且4DigitRandomNumber取最小值。
-2. 每个MCM_record文件内可能存在多个 properties 完全相同的 record_item ，你应该只保留最后的那一个record_item。
-3. 每个MCM_record文件内可能存在多个 properties.option 不同，但是其余 properties 全都相同的record_item，你应该只保留最后的那一个record_item。
+1. 你需要把所有modname相同的文件合并为一个文件，新文件的filename依旧遵循上述命名规则且4DigitOrderedNumber取最大值。
+2. 每个MCM_record文件内可以存在多个 record_item.mod与record_item.page 的值都相同的 record_item。
+3. 其余的record_item的property的值都应该是唯一且独特的，如果存在冲突，就选用最新的那个值。
